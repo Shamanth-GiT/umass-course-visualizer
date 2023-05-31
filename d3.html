@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        .link {
+            stroke: #999;
+            stroke-opacity: 0.6;
+        }
+
+        .node {
+            fill: #ccc;
+            stroke: #fff;
+            cursor: move;
+        }
+    </style>
+</head>
+
+<body>
+    <svg width="600" height="400"></svg>
+
+    <script>
+        // Sample data
+        const nodes = [
+            { id: 1, name: "COMPSCI 320" },
+            { id: 2, name: "COMPSCI 326" },
+            { id: 3, name: "COMPSCI 520" },
+            { id: 4, name: "Lol" },
+            { id: 5, name: "LMAO" }
+        ];
+
+        const links = [
+            { source: 1, target: 2 },
+            { source: 1, target: 3 },
+            { source: 2, target: 3 },
+            { source: 4, target: 5 }
+        ];
+
+        // Create the SVG container
+        const svg = d3.select("svg");
+
+        // Create the simulation
+        const simulation = d3.forceSimulation(nodes)
+            .force("link", d3.forceLink(links).id(d => d.id))
+            .force("charge", d3.forceManyBody())
+            .force("center", d3.forceCenter(svg.attr("width") / 2, svg.attr("height") / 2));
+
+        // Create the links
+        const link = svg.append("g")
+            .attr("class", "links")
+            .selectAll("line")
+            .data(links)
+            .enter()
+            .append("line")
+            .attr("stroke-width", 2)
+            .attr("stroke", "gray");
+
+        // Create the nodes
+        const node = svg.append("g")
+            .attr("class", "nodes")
+            .selectAll("circle")
+            .data(nodes)
+            .enter()
+            .append("circle")
+            .attr("r", 10)
+            .attr("fill", "steelblue")
+            .call(drag(simulation)); // Add drag behavior to nodes
+
+        // Add labels to the nodes
+        const label = svg.append("g")
+            .attr("class", "labels")
+            .selectAll("text")
+            .data(nodes)
+            .enter()
+            .append("text")
+            .text(d => d.name)
+            .attr("font-size", "12px")
+            .attr("dx", 15)
+            .attr("dy", 4);
+
+        // Define the tick function
+        const ticked = () => {
+            link.attr("x1", d => d.source.x)
+                .attr("y1", d => d.source.y)
+                .attr("x2", d => d.target.x)
+                .attr("y2", d => d.target.y);
+
+            node.attr("cx", d => d.x)
+                .attr("cy", d => d.y);
+
+            label.attr("x", d => d.x)
+                .attr("y", d => d.y);
+        };
+
+        // Run the simulation
+        simulation.on("tick", ticked);
+
+        // Drag behavior function
+        function drag(simulation) {
+            function dragStarted(event, d) {
+                if (!event.active) simulation.alphaTarget(0.3).restart();
+                d.fx = d.x;
+                d.fy = d.y;
+            }
+            function dragged(event, d) {
+                d.fx = event.x;
+                d.fy = event.y;
+            }
+            function dragEnded(event, d) {
+                if (!event.active) simulation.alphaTarget(0);
+                d.fx = null;
+                d.fy = null;
+            }
+
+            return d3.drag()
+                .on("start", dragStarted)
+                .on("drag", dragged)
+                .on("end", dragEnded);
+        }
+    </script>
