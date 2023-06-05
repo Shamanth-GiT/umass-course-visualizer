@@ -1,4 +1,5 @@
-// Sample data
+import * as util from "./util.js";
+/*
 let courses = {
     //'COMPSCI 102': [],
     //'COMPSCI 105': [],
@@ -21,6 +22,29 @@ let courses = {
     'COMPSCI 197WP': ['COMPSCI 121'],
     'COMPSCI 198C': ['COMPSCI 121', 'COMPSCI 186']
 }
+*/
+let courses = {};
+let search_queries = ['COMPSCI'];
+search_queries.forEach(search => {
+    const promise = util.fetchCourseID(search);
+    promise.then(data => {
+        let results = data.results;
+        let ids = results.map(x => x["id"]);
+        console.log(ids);
+        ids.forEach(elem => {
+            console.log(courses);
+            console.log(Object.keys(courses));
+            courses[elem] = '';
+        });
+        return courses;
+    })
+    .then(courses => {
+        
+    });
+});
+
+// --------------  The rest of this code should be put in the second and final chain for the promise above ----------
+
 
 // create nodes and links for the graph
 let nodes = [];
