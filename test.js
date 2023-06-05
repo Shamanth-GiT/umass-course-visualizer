@@ -30,30 +30,25 @@ function findPrereq(data) {
 }
 
 function findCourses(text) {
-    // This regex looks for a word starting with a capital letter followed by a number,
-    // then any number of instances of '&' or ',' or 'and' or 'or' followed by another number
-    const regex = /([A-Z][a-zA-Z]*\s*\d+)((\s*(and|or|&|,)\s*\d+)*)/g;
-
-    // We store the resulting course names here
+    const regex = /([A-Z][a-zA-Z]*)\s*((\d+[A-Za-z]*\s*(and|or|&|,)\s*)*\d+[A-Za-z]*(\s*or\s*\d+[A-Za-z]*)?)/g;
     let result = [];
-
     let match;
-    while (match = regex.exec(text)) {
-        // The first group is the course name followed by a number
-        // The second group is any number of instances of '&' or ',' or 'and' or 'or' followed by a number
-        // The second group might include 'and', 'or', '&' or ',' which we don't need, so we remove them
-        let courses = match[1] + match[2];
-        courses = courses.replace(/\s*(and|or|&|,)\s*/g, ' ');
 
-        // We split the courses by spaces, then pair the course name with each number
-        let parts = courses.split(' ');
-        let prefix = null;
-        for (let part of parts) {
-            if (/[A-Z][a-zA-Z]*/.test(part)) {
-                prefix = part;
-            } else if (/\d+/.test(part)) {
-                result.push(prefix + ' ' + part);
-            }
+    while ((match = regex.exec(text)) !== null) {
+        let prefix = match[1];
+
+        // Ignore course names that consist of a single letter
+        if (prefix.length === 1) {
+            continue;
+        }
+
+        let courseCodesStr = match[2];
+        courseCodesStr = courseCodesStr.replace(/\s*(and|or|&|,)\s*/g, ' ');
+
+        let courseCodes = courseCodesStr.match(/\d+[A-Za-z]*/g);
+
+        for (let courseCode of courseCodes) {
+            result.push(prefix + ' ' + courseCode);
         }
     }
 
