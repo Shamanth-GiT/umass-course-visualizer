@@ -5,6 +5,37 @@
     <meta charset="utf-8">
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
+        /* Global styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+        }
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        /* Section styles */
+        section {
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        /* D3 graph styles */
         .link {
             stroke: #999;
             stroke-opacity: 0.6;
@@ -19,70 +50,79 @@
 </head>
 
 <body>
-    <svg width="1000" height="1000"></svg>
+    <div class="navbar">
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+    </div>
+
+    <section width = "1000" height= "1000">
+        <h1>UMass COMPUTER SCIENCE and MATH courses</h1>
+        <svg width="1000" height="1000"></svg>
+    </section>
 
     <script>
         // Sample data
-    let courses = {
-        //'COMPSCI 102': [],
-        //'COMPSCI 105': [],
-        //'COMPSCI 119': [],
-        //'COMPSCI 120': [],
-        'COMPSCI 121': ['Math 101', 'Math 102', 'Math 104', 'Math 127', 'Math 128', 'Math 131', 'Math 132'],
-        // 'COMPSCI 145': [],
-        'COMPSCI 186': ['COMPSCI 121', 'Math 101', 'Math 102', 'Math 104', 'Math 127', 'Math 128', 'Math 131', 'Math 132'],
-        'COMPSCI 187': ['COMPSCI 121', 'COMPSCI 186', 'COMPSCI 190D'],
-        // 'COMPSCI 190F': [],
-        // 'COMPSCI 191CMPS1': [],
-        // 'COMPSCI 196': [],
-        // 'COMPSCI 196ISH': [],
-        // 'COMPSCI 197B': [],
-        'COMPSCI 197C': ['COMPSCI 186', 'COMPSCI 187'],
-        // 'COMPSCI 197Q': [],
-        // 'COMPSCI 197S': [],
-        // 'COMPSCI 197SC01': [],
-        // 'COMPSCI 197U': [],
-        'COMPSCI 197WP': ['COMPSCI 121'],
-        'COMPSCI 198C': ['COMPSCI 121', 'COMPSCI 186']
-    }
+        let courses = {
+            //'COMPSCI 102': [],
+            //'COMPSCI 105': [],
+            //'COMPSCI 119': [],
+            //'COMPSCI 120': [],
+            'COMPSCI 121': ['Math 101', 'Math 102', 'Math 104', 'Math 127', 'Math 128', 'Math 131', 'Math 132'],
+            // 'COMPSCI 145': [],
+            'COMPSCI 186': ['COMPSCI 121', 'Math 101', 'Math 102', 'Math 104', 'Math 127', 'Math 128', 'Math 131', 'Math 132'],
+            'COMPSCI 187': ['COMPSCI 121', 'COMPSCI 186', 'COMPSCI 190D'],
+            // 'COMPSCI 190F': [],
+            // 'COMPSCI 191CMPS1': [],
+            // 'COMPSCI 196': [],
+            // 'COMPSCI 196ISH': [],
+            // 'COMPSCI 197B': [],
+            'COMPSCI 197C': ['COMPSCI 186', 'COMPSCI 187'],
+            // 'COMPSCI 197Q': [],
+            // 'COMPSCI 197S': [],
+            // 'COMPSCI 197SC01': [],
+            // 'COMPSCI 197U': [],
+            'COMPSCI 197WP': ['COMPSCI 121'],
+            'COMPSCI 198C': ['COMPSCI 121', 'COMPSCI 186']
+        }
 
-    // create nodes and links for the graph
-    let nodes = [];
-    let links = [];
-    
-    // create nodes
-    for (let course in courses) {
-        nodes.push({
-            id: course,
-            name: course
-        });
-    }
+        // create nodes and links for the graph
+        let nodes = [];
+        let links = [];
 
-    // create links
-    //Check if every course in prereqs is in nodes
-    //If it is, add a link from the course to the prereq
-    //If it isn't, add the course to nodes and add a link from the course to the prereq
-    for (let course in courses) {
-        for (let prereq of courses[course]) {
-            if (nodes.some(node => node.id === prereq)) {
-                links.push({
-                    source: course,
-                    target: prereq
-                });
-            } else {
-                nodes.push({
-                    id: prereq,
-                    name: prereq
-                });
-                links.push({
-                    source: course,
-                    target: prereq
-                });
+        // create nodes
+        for (let course in courses) {
+            nodes.push({
+                id: course,
+                name: course
+            });
+        }
+
+        // create links
+        //Check if every course in prereqs is in nodes
+        //If it is, add a link from the course to the prereq
+        //If it isn't, add the course to nodes and add a link from the course to the prereq
+        for (let course in courses) {
+            for (let prereq of courses[course]) {
+                if (nodes.some(node => node.id === prereq)) {
+                    links.push({
+                        source: course,
+                        target: prereq
+                    });
+                } else {
+                    nodes.push({
+                        id: prereq,
+                        name: prereq
+                    });
+                    links.push({
+                        source: course,
+                        target: prereq
+                    });
+                }
             }
         }
-    }
 
-    function courseColor(courseName) {
+        function courseColor(courseName) {
             if (courseName.includes('COMPSCI')) {
                 return "red";
             } else if (courseName.includes('Math')) {
@@ -175,3 +215,6 @@
                 .on("end", dragEnded);
         }
     </script>
+</body>
+
+</html>
