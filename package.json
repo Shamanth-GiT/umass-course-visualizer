@@ -1,0 +1,19 @@
+{
+  "name": "umass-course-visualizer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shamanth-GiT/UMass-Course-Visualizer.git"
+  },
+  "author": "Shamanth K. and Quang Dang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Shamanth-GiT/UMass-Course-Visualizer/issues"
+  },
+  "homepage": "https://github.com/Shamanth-GiT/UMass-Course-Visualizer#readme"
+}

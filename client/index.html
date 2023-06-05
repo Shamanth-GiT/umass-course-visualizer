@@ -3,63 +3,32 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>UMass Amherst Course Visualizer</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
-    <style>
-        /* Global styles */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Navbar styles */
-        .navbar {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-        }
-
-        .navbar a {
-            color: #fff;
-            text-decoration: none;
-            margin-right: 10px;
-        }
-
-        /* Section styles */
-        section {
-            padding: 20px;
-        }
-
-        h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-
-        /* D3 graph styles */
-        .link {
-            stroke: #999;
-            stroke-opacity: 0.6;
-        }
-
-        .node {
-            fill: #ccc;
-            stroke: #fff;
-            cursor: move;
-        }
-    </style>
+    <!-- Bootstrap inclusion via CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous" defer></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400&display=swap" rel="stylesheet">
+    <!-- Personal stylesheet  -->
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
-    <div class="navbar">
-        <a href="#">Home</a>
-        <a href="#">About</a>
-        <a href="#">Contact</a>
-    </div>
+    <nav class="navbar bg-dark border-bottom border-bottom-dark" data-bs-theme="dark"">
+        <div class="container-fluid">
+          <a class="navbar-brand">UMass CICS</a>
+          <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+        </div>
+    </nav>
 
-    <section width = "1000" height= "1000">
-        <h1>UMass COMPUTER SCIENCE and MATH courses</h1>
-        <svg width="1000" height="1000"></svg>
-    </section>
+    <svg id="svg" width="1000" height="1000"></svg>
 
     <script>
         // Sample data
@@ -149,7 +118,7 @@
             .data(links)
             .enter()
             .append("line")
-            .attr("stroke-width", 2)
+            .attr("stroke-width", 3)
             .attr("stroke", "gray");
 
         // Create the nodes
@@ -159,7 +128,7 @@
             .data(nodes)
             .enter()
             .append("circle")
-            .attr("r", 15)
+            .attr("r", 20)
             .attr("fill", d => courseColor(d.name))
             .call(drag(simulation)); // Add drag behavior to nodes
 
