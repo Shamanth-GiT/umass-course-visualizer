@@ -1,4 +1,6 @@
 import * as util from "./util.js";
+import { findCourses } from "./test.js";
+import * as d3 from "../../node_modules/d3/dist/d3.min.js";
 /*
 let courses = {
     //'COMPSCI 102': [],
@@ -23,6 +25,7 @@ let courses = {
     'COMPSCI 198C': ['COMPSCI 121', 'COMPSCI 186']
 }
 */
+//* TODO: Finish this function 
 let courses = {};
 let search_queries = ['COMPSCI'];
 search_queries.forEach(search => {
@@ -30,16 +33,21 @@ search_queries.forEach(search => {
     promise.then(data => {
         let results = data.results;
         let ids = results.map(x => x["id"]);
-        console.log(ids);
+        let descriptions = results.map(x => x["enrollment_information"] === null ? null : x["enrollment_information"]["enrollment_requirement"]);
         ids.forEach(elem => {
-            console.log(courses);
-            console.log(Object.keys(courses));
-            courses[elem] = '';
+            courses[elem] = descriptions[ids.indexOf(elem)] === null ? null : findCourses(descriptions[ids.indexOf(elem)]);
         });
+        //console.log(courses);
         return courses;
     })
     .then(courses => {
-        
+        //Filter out courses with null or empty prereqs
+        for (let course in courses) {
+            if (courses[course] === null || courses[course].length === 0) {
+                delete courses[course];
+            }
+        }
+        return courses;
     });
 });
 
@@ -92,8 +100,9 @@ function courseColor(courseName) {
     }
 }
 
+
 // Create the SVG container
-const svg = d3.select("#svg");
+const svg = d3.select("svg");
 
 // Create the simulation
 const simulation = d3.forceSimulation(nodes)
