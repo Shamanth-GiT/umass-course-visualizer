@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>UMass Amherst Course Visualizer</title>
+  <title>UMass Amherst CICS Courses Visualizer</title>
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script type="module" src="js/simulation.js" defer></script>
   <!-- Bootstrap inclusion via CDN -->
@@ -31,9 +31,9 @@
     }
 
     #svg {
-      height: 100%;
+      height: 100vh;
       /* Set height to full html height */
-      width: 100%;
+      width: 100vw;
       /* Set width to full html width */
     }
   </style>
@@ -42,7 +42,7 @@
 <body>
   <nav class="navbar bg-dark border-bottom border-bottom-dark" data-bs-theme="dark"">
         <div class=" container-fluid">
-    <a class="navbar-brand">UMass Course Visualizer</a>
+    <a class="navbar-brand">UMass CICS Course Visualizer</a>
     <form class="d-flex" role="search">
       <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success" type="submit">Search</button>
