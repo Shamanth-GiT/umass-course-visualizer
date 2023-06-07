@@ -1,28 +1,4 @@
 import * as util from "./util.js";
-/*
-let courses = {
-    //'COMPSCI 102': [],
-    //'COMPSCI 105': [],
-    //'COMPSCI 119': [],
-    //'COMPSCI 120': [],
-    'COMPSCI 121': ['Math 101', 'Math 102', 'Math 104', 'Math 127', 'Math 128', 'Math 131', 'Math 132'],
-    // 'COMPSCI 145': [],
-    'COMPSCI 186': ['COMPSCI 121', 'Math 101', 'Math 102', 'Math 104', 'Math 127', 'Math 128', 'Math 131', 'Math 132'],
-    'COMPSCI 187': ['COMPSCI 121', 'COMPSCI 186', 'COMPSCI 190D'],
-    // 'COMPSCI 190F': [],
-    // 'COMPSCI 191CMPS1': [],
-    // 'COMPSCI 196': [],
-    // 'COMPSCI 196ISH': [],
-    // 'COMPSCI 197B': [],
-    'COMPSCI 197C': ['COMPSCI 186', 'COMPSCI 187'],
-    // 'COMPSCI 197Q': [],
-    // 'COMPSCI 197S': [],
-    // 'COMPSCI 197SC01': [],
-    // 'COMPSCI 197U': [],
-    'COMPSCI 197WP': ['COMPSCI 121'],
-    'COMPSCI 198C': ['COMPSCI 121', 'COMPSCI 186']
-}
-*/
 //* TODO: Finish this function 
 let courses = {};
 let search_queries = ['COMPSCI'];
@@ -32,12 +8,14 @@ let links = [];
 search_queries.forEach(search => {
     const promise = util.fetchCourseID(search);
     promise.then(data => {
-        let results = data.results;
-        let ids = results.map(x => x["id"]);
-        let descriptions = results.map(x => x["enrollment_information"] === null ? null : x["enrollment_information"]["enrollment_requirement"]);
+        //console.log(data)
+        let ids = data.map(x => x.results.map(y => y["id"])).flat();
+        // console.log(ids);
+        let descriptions = data.map(x => x.results.map(y => y["enrollment_information"] === null ? null : y["enrollment_information"]["enrollment_requirement"])).flat();
         ids.forEach(elem => {
             courses[elem] = descriptions[ids.indexOf(elem)] === null ? null : util.findCourses(descriptions[ids.indexOf(elem)]);
         });
+        console.log(descriptions);
         return courses;
     }).then(courses => {
         //Filter out courses with null or empty prereqs
@@ -46,6 +24,7 @@ search_queries.forEach(search => {
                 delete courses[course];
             }
         }
+        console.log(courses);
         return courses;
     }).then(courses => {
         console.log(courses);
@@ -83,8 +62,8 @@ search_queries.forEach(search => {
 
         function courseColor(courseName) {
             if (courseName.includes('COMPSCI')) {
-                return "red";
-            } else if (courseName.includes('Math')) {
+                return "maroon";
+            } else if (courseName.includes('Math') || courseName.includes('STATISTC') || courseName.includes('MATH')) {
                 return "blue";
             } else {
                 return "black"; // default color
