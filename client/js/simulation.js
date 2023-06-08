@@ -97,17 +97,6 @@ search_queries.forEach(search => {
         .force("collide", d3.forceCollide(100));
 
         // Create the links
-        // const link = svg.append("g")
-        // .attr("class", "links")
-        // .selectAll("line")
-        // .data(links)
-        // .enter()
-        // .append("line")
-        // .attr("stroke-width", 3)
-        // .attr("stroke", "gray");
-
-
-        // Create the links
         const link = svg.append("g")
             .attr("class", "links")
             .selectAll("line")
