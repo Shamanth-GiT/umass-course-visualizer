@@ -1,5 +1,21 @@
 import * as util from "./util.js";
-//* TODO: Finish this function 
+
+let defs = d3.select('svg').append('defs');
+
+defs.append('marker')
+    .attr('id', 'arrowhead')
+    .attr('viewBox', '-0 -5 10 10')
+    .attr('refX', 13)
+    .attr('refY', 0)
+    .attr('orient', 'auto')
+    .attr('markerWidth', 20)
+    .attr('markerHeight', 20)
+    .attr('xoverflow', 'visible')
+    .append('svg:path')
+    .attr('d', 'M 0,-5 L 10 ,0 L 0,5')
+    .attr('fill', 'gray')
+    .style('stroke', 'none');
+
 let courses = {};
 let search_queries = ['COMPSCI'];
 // create nodes and links for the graph
@@ -44,8 +60,8 @@ search_queries.forEach(search => {
             for (let prereq of courses[course]) {
                 if (nodes.some(node => node.id === prereq)) {
                     links.push({
-                        source: course,
-                        target: prereq
+                        source: prereq,
+                        target: course
                     });
                 } else {
                     nodes.push({
@@ -53,15 +69,15 @@ search_queries.forEach(search => {
                         name: prereq
                     });
                     links.push({
-                        source: course,
-                        target: prereq
+                        source: prereq,
+                        target: course
                     });
                 }
             }
         }
 
         function courseColor(courseName) {
-            if (courseName.includes('COMPSCI')) {
+            if (courseName.includes('COMPSCI') || courseName.includes('INFO') || courseName.includes('CICS')) {
                 return "maroon";
             } else if (courseName.includes('Math') || courseName.includes('STATISTC') || courseName.includes('MATH')) {
                 return "blue";
@@ -81,15 +97,28 @@ search_queries.forEach(search => {
         .force("collide", d3.forceCollide(100));
 
         // Create the links
-        const link = svg.append("g")
-        .attr("class", "links")
-        .selectAll("line")
-        .data(links)
-        .enter()
-        .append("line")
-        .attr("stroke-width", 3)
-        .attr("stroke", "gray");
+        // const link = svg.append("g")
+        // .attr("class", "links")
+        // .selectAll("line")
+        // .data(links)
+        // .enter()
+        // .append("line")
+        // .attr("stroke-width", 3)
+        // .attr("stroke", "gray");
 
+
+        // Create the links
+        const link = svg.append("g")
+            .attr("class", "links")
+            .selectAll("line")
+            .data(links)
+            .enter()
+            .append("line")
+            .attr("stroke-width", 3)
+            .attr("stroke", "gray")
+            .attr('marker-end', 'url(#arrowhead)');  // This adds the arrow to the end of each link
+
+        
         // Create the nodes
         const node = svg.append("g")
         .attr("class", "nodes")
