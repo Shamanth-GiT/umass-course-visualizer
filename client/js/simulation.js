@@ -1,21 +1,5 @@
 import * as util from "./util.js";
 
-let defs = d3.select('svg').append('defs');
-
-defs.append('marker')
-    .attr('id', 'arrowhead')
-    .attr('viewBox', '-0 -5 10 10')
-    .attr('refX', 13)
-    .attr('refY', 0)
-    .attr('orient', 'auto')
-    .attr('markerWidth', 10)
-    .attr('markerHeight', 10)
-    .attr('xoverflow', 'visible')
-    .append('svg:path')
-    .attr('d', 'M 0,-5 L 10 ,0 L 0,5')
-    .attr('fill', 'gray')
-    .style('stroke', 'none');
-
 let courses = {};
 let search_queries = ['COMPSCI'];
 // create nodes and links for the graph
@@ -24,14 +8,12 @@ let links = [];
 search_queries.forEach(search => {
     const promise = util.fetchCourseID(search);
     promise.then(data => {
-        //console.log(data)
         let ids = data.map(x => x.results.map(y => y["id"])).flat();
         // console.log(ids);
         let descriptions = data.map(x => x.results.map(y => y["enrollment_information"] === null ? null : y["enrollment_information"]["enrollment_requirement"])).flat();
         ids.forEach(elem => {
             courses[elem] = descriptions[ids.indexOf(elem)] === null ? null : util.findCourses(descriptions[ids.indexOf(elem)]);
         });
-        console.log(descriptions);
         return courses;
     }).then(courses => {
         //Filter out courses with null or empty prereqs
@@ -40,10 +22,9 @@ search_queries.forEach(search => {
                 delete courses[course];
             }
         }
-        console.log(courses);
         return courses;
     }).then(courses => {
-        console.log(courses);
+        //console.log(courses);
         // create nodes
         for (let course in courses) {
             nodes.push({
@@ -91,13 +72,42 @@ search_queries.forEach(search => {
 
         // Create the simulation
         const simulation = d3.forceSimulation(nodes)
-        .force("link", d3.forceLink(links).id(d => d.id).distance(100))
-        .force("charge", d3.forceManyBody(-10))
-        .force("center", d3.forceCenter(svg.attr("width") / 2, svg.attr("height") / 2))
-        .force("collide", d3.forceCollide(100));
+            .force("link", d3.forceLink(links).id(d => d.id).distance(100))
+            .force("charge", d3.forceManyBody(-10))
+            .force("center", d3.forceCenter(svg.attr("width") / 2, svg.attr("height") / 2))
+            .force("collide", d3.forceCollide(100));
 
-        // Create the links
-        const link = svg.append("g")
+        // Create a container inside SVG to hold all other elements
+        const container = svg.append("g");
+
+        // Create zoom behavior
+        const zoom = d3.zoom()
+            .scaleExtent([0.1, 10]) // This control the minimum and maximum zoom scale
+            .on("zoom", (event) => {
+                container.attr("transform", event.transform);
+            });
+
+        // Apply the zoom behavior to the svg
+        svg.call(zoom);
+
+        // Append defs to the container
+        let defs = container.append('defs');
+
+        defs.append('marker')
+            .attr('id', 'arrowhead')
+            .attr('viewBox', '0 -5 10 10')
+            .attr('refX', 20)
+            .attr('refY', 0)
+            .attr('orient', 'auto')
+            .attr('markerWidth', 6)
+            .attr('markerHeight', 6)
+            .attr('xoverflow', 'visible')
+            .append('svg:path')
+            .attr('d', 'M 0,-5 L 10 ,0 L 0,5')
+            .attr('fill', 'gray')
+            .style('stroke', 'none');
+
+        const link = container.append("g")
             .attr("class", "links")
             .selectAll("line")
             .data(links)
@@ -107,31 +117,28 @@ search_queries.forEach(search => {
             .attr("stroke", "gray")
             .attr('marker-end', 'url(#arrowhead)');  // This adds the arrow to the end of each link
 
+        const node = container.append("g")
+            .attr("class", "nodes")
+            .selectAll("circle")
+            .data(nodes)
+            .enter()
+            .append("circle")
+            .attr("r", 20)
+            .attr("fill", d => courseColor(d.name))
+            .call(drag(simulation)); // Add drag behavior to nodes
+
+        const label = container.append("g")
+            .attr("class", "labels")
+            .selectAll("text")
+            .data(nodes)
+            .enter()
+            .append("text")
+            .text(d => d.name)
+            .attr("font-size", "14px")
+            .attr("dx", 22)
+            .attr("dy", 4);
         
-        // Create the nodes
-        const node = svg.append("g")
-        .attr("class", "nodes")
-        .selectAll("circle")
-        .data(nodes)
-        .enter()
-        .append("circle")
-        .attr("r", 20)
-        .attr("fill", d => courseColor(d.name))
-        .call(drag(simulation)); // Add drag behavior to nodes
-
-        // Add labels to the nodes
-        const label = svg.append("g")
-        .attr("class", "labels")
-        .selectAll("text")
-        .data(nodes)
-        .enter()
-        .append("text")
-        .text(d => d.name)
-        .attr("font-size", "14px")
-        .attr("dx", 22)
-        .attr("dy", 4);
-
-        // Define the tick function
+            // Define the tick function
         const ticked = () => {
             link.attr("x1", d => d.source.x)
                 .attr("y1", d => d.source.y)

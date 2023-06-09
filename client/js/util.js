@@ -7,8 +7,15 @@ async function fetchCourseID(search) {
             const response = await fetch(`https://spire-api.melanson.dev/courses/?page=${page}&search=${search}`);
             if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
             const data = await response.json();
-
+            //
             // Combine the new data with the results we have so far.
+            // let updated = data.filter(x => {
+            //     x["offerings"].forEach(e => {
+            //        if(e.hasOwnProperty("term") && e["term"].hasOwnProperty("id") && e["term"]["id"] === "Spring 2023"){
+            //               return true; 
+            //        }
+            //     });
+            // });
             results = results.concat(data);
 
             // Check if there's a next page. This will depend on how your API communicates this.
@@ -57,3 +64,5 @@ function findCourses(text) {
 
 
 export{ fetchCourseID, findCourses };
+
+
