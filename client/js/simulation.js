@@ -62,13 +62,14 @@ function createNodesAndLinks(courses) {
             name: course
         });
     }
-    
+
     for (let course in courses) {
         for (let prereq of courses[course]) {
+            prereq = prereq.toUpperCase();
             if (nodes.some(node => node.id === prereq)) {
                 links.push({
-                    source: course,
-                    target: prereq
+                    source: prereq,
+                    target: course
                 });
             } else {
                 nodes.push({
@@ -76,8 +77,8 @@ function createNodesAndLinks(courses) {
                     name: prereq
                 });
                 links.push({
-                    source: course,
-                    target: prereq
+                    source: prereq,
+                    target: course
                 });
             }
         }
