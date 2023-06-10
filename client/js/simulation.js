@@ -15,12 +15,12 @@ const constants = {
 
 // Modularized function for course color selection.
 function courseColor(courseName) {
-    if (courseName.startsWith('COMPSCI') || courseName.startsWith('INFO') || courseName.startsWith('CICS')) {
-        return "maroon";
+    if (courseName.startsWith("CMPSCI") || courseName.startsWith('COMPSCI') || courseName.startsWith('INFO') || courseName.startsWith('CICS')) {
+        return "#881c1c";
     } else if (courseName.startsWith('Math') || courseName.startsWith('STATISTC') || courseName.startsWith('MATH')) {
-        return "blue";
+        return "#002554";
     } else {
-        return "black"; // default color
+        return "#ffc72c"; // default color
     }
 }
 
@@ -30,7 +30,11 @@ async function processCourses() {
 
     for (const search of searchQueries) {
         const data = await util.fetchCourseID(search);
+        // const filteredData = data.map(x => x.results.filter(y => {
+        //     return true;
+        // }));
         const courseMap = new Map();
+        //console.log(filteredData)
         data.forEach(item => {
             item.results.forEach(result => {
                 courseMap.set(result["id"], result["enrollment_information"] === null ? null : util.findCourses(result["enrollment_information"]["enrollment_requirement"]));
@@ -43,7 +47,7 @@ async function processCourses() {
             }
         }
     }
-
+    console.log(courses)
     return courses;
 }
 
@@ -59,6 +63,7 @@ function createNodesAndLinks(courses) {
         });
 
         for (let prereq of courses[course]) {
+            prereq = prereq.toUpperCase();
             if (!nodes.some(node => node.id === prereq)) {
                 nodes.push({
                     id: prereq,
