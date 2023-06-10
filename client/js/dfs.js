@@ -15,7 +15,7 @@ function dfs(course, visited = new Set()) {
 
 // ? I chatGPT-ed this, I am not sure if it works or not, maybe you test it out.
 function visualizeShortestPath(startCourse, targetCourse) {
-    // Call the DFS algorithm to find the shortest path
+    // Call the DFS algorithm to find the path from startCourse to targetCourse
     let shortestPath = dfs(startCourse, targetCourse);
 
     // Update the visualization
