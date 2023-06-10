@@ -6,8 +6,8 @@ const searchQueries = ['COMPSCI'];
 const constants = {
     refX: 20,
     circleRadius: 20,
-    markerWidth: 10,
-    markerHeight: 10,
+    markerWidth: 6,
+    markerHeight: 6,
     scaleExtent: [0.1, 10],
     distance: 100,
     collide: 100
