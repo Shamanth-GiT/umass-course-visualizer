@@ -47,6 +47,3 @@ function findCourses(text) {
 }
 
 export { fetchCourseID, findCourses };
-
-
-
