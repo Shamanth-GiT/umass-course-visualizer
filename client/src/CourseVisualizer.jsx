@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
-import './CourseVisualizer.css';
 import { fetchCourseID, findCourses } from './util/Util';
 
 // Drag behavior function
@@ -52,7 +51,7 @@ const constants = {
     collide: 100
 };
 
-const CourseVisualizer = () => {
+export const CourseVisualizer = () => {
     const nodeRef = useRef();
 
     const processCourses = async () => {
@@ -219,5 +218,3 @@ const CourseVisualizer = () => {
         </div>
     );
 };
-
-export default CourseVisualizer;
