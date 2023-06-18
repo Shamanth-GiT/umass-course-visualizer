@@ -1,0 +1,14 @@
+.course-visualizer {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Josefin Sans', sans-serif;
+    background-color: #f5f5f7;
+}
+
+svg {
+    height: 100vh;
+    width: 100vw;
+    display: block;
+    margin: auto;
+}
