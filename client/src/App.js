@@ -1,14 +1,26 @@
 import React from 'react';
+import { Route, Routes} from 'react-router-dom';
 import './styles.css';
-import {CourseVisualizer} from './CourseVisualizer';
-import {Navbar} from './Navbar'
+import {CourseVisualizer} from './components/CourseVisualizer';
+import {Navbar} from './components/Navbar';
+import {Login} from './components/Login'
 
 function App() {
   return (
-    <div className="App">
-      <Navbar />
-      <CourseVisualizer />
-    </div>
+    <Routes>
+      <Route path="/" element={
+        <>
+          <Login/>
+        </>
+      }/>
+      <Route path="/dashboard" element={
+        <div className="App">
+        <Navbar />
+        <CourseVisualizer />
+      </div>
+      }/>
+    </Routes>
+    
   );
 }
 
