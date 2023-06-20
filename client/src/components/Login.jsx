@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { CSSTransition } from 'react-transition-group';
-import './login.css';
+import '../theme/login.css';
 
 export const Login = (props) => {
     const [isNewUser, setIsNewUser] = useState(false);
@@ -30,9 +30,9 @@ export const Login = (props) => {
             <h2>{isNewUser ? "Register" : "Login"}</h2>
             <CSSTransition in={isNewUser} timeout={300} classNames="fade" unmountOnExit>
                 <form className="login-form" onSubmit={handleSubmit}>
-                    <label htmlFor="username">Username</label>
+                    <label htmlFor="username">New Username</label>
                     <input value={username} onChange={(e) => setUsername(e.target.value)} type="text" placeholder="Username" id="username" name="username" />
-                    <label htmlFor="name">Name</label>
+                    <label htmlFor="name">First Name</label>
                     <input value={firstName} onChange={(e) => setFirstName(e.target.value)} type="text" placeholder="First Name" id="name" name="name" />
                     <label htmlFor="lastname">Last Name</label>
                     <input value={lastName} onChange={(e) => setLastName(e.target.value)} type="text" placeholder="Last Name" id="lastname" name="lastname" />

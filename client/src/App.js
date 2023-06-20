@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Routes} from 'react-router-dom';
-import './styles.css';
+import './theme/styles.css';
 import {CourseVisualizer} from './components/CourseVisualizer';
 import {Navbar} from './components/Navbar';
 import {Login} from './components/Login'

@@ -4,7 +4,11 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-color: #f4f4f4;
+    background-image: url('./maroon.jpg'); 
+    /* replace with your image's URL */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .auth-form {
@@ -36,8 +40,7 @@ body {
 
 .login-form input[type="email"],
 .login-form input[type="password"],
-.login-form input[type="username"],
-
+.login-form input[type="text"],
 .login-form button {
     padding: 10px;
     border-radius: 5px;
@@ -49,20 +52,20 @@ body {
 }
 
 .login-form button {
-    background-color: #007BFF;
+    background-color: #881c1c;
     color: #fff;
     cursor: pointer;
 }
 
 .login-form button:hover {
-    background-color: #0056b3;
+    background-color: #6ba539;
 }
 
 .toggle-form {
     background: none;
     border: none;
-    color: #007BFF;
-    text-decoration: underline;
+    color: #212721;
+    text-decoration: none;
     cursor: pointer;
     margin-top: 20px;
 }
@@ -72,19 +75,25 @@ body {
 }
 
 .fade-enter {
-    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
 }
 
 .fade-enter-active {
-    opacity: 1;
-    transition: opacity 300ms;
+    max-height: 500px;
+    /* adjust this as needed */
+    transition: max-height 300ms ease-in-out;
+    overflow: hidden;
 }
 
 .fade-exit {
-    opacity: 1;
+    max-height: 500px;
+    /* same as the enter-active max-height */
+    overflow: hidden;
 }
 
 .fade-exit-active {
-    opacity: 0;
-    transition: opacity 300ms;
+    max-height: 0;
+    transition: max-height 300ms ease-in-out;
+    overflow: hidden;
 }
