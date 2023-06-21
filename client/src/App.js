@@ -15,9 +15,9 @@ function App() {
       }/>
       <Route path="/dashboard" element={
         <div className="App">
-        <Navbar />
-        <CourseVisualizer />
-      </div>
+          <Navbar />
+          <CourseVisualizer />
+        </div>
       }/>
     </Routes>
     

@@ -1,14 +1,17 @@
-body {
+.body-login {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-image: url('./maroon.jpg'); 
+    background-image: url('./Screenshot\ 2023-06-21\ at\ 2.15.33\ PM.png'); 
     /* replace with your image's URL */
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    font-family: museo-sans, sans-serif;
+    font-style: normal;
+    font-weight: 400;
 }
 
 .auth-form {
@@ -19,6 +22,7 @@ body {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     background-color: #fff;
     /* text-align: center; */
+    border-radius: 25px;
 }
 
 .auth-form h2 {

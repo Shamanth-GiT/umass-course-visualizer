@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 import { fetchCourseID, findCourses } from '../util/Util';
+import '../theme/course_visualizer.css'
 
 // Drag behavior function
 function drag(simulation) {

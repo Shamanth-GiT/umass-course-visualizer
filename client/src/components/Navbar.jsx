@@ -1,4 +1,5 @@
 import React from 'react';
+import '../theme/course_visualizer.css'
 
 export const Navbar = () => {
     return (
