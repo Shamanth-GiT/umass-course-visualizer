@@ -1,0 +1,36 @@
+.discovery {
+    text-align: center;
+    position: relative;
+    height: 100vh;
+    padding: 1rem;
+    background-color: white;
+}
+
+.card {
+    width: 18rem;
+    border-style:dashed;
+    border-color: black;
+    border-width: 2px;
+}
+
+.card:hover {
+    border-style: solid;
+    border-color: maroon;
+    cursor:pointer;
+}
+
+.container {
+    margin-top: 5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+#logo {
+    background-image: url('./Manning_CICS-horiz-cmyk-lrg.jpg');
+    background-repeat:no-repeat;
+    background-size:contain;
+    height:200px;
+    width:70%;
+    margin: auto;
+    margin-top: 4rem;
+}

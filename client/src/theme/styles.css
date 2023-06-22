@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata&family=Josefin+Sans:wght@300;400&display=swap');
 body {
     margin: 0;
     height: 100%;
     overflow: hidden;
-    font-family: '-apple-system', system-ui, -apple-system, BlinkMacSystemFont;
+    font-family: 'Inconsolata', monospace;
+    font-family: 'Josefin Sans', sans-serif;
     background-color: #e3e2df;
     background-image: none;
 }

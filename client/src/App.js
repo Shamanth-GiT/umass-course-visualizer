@@ -3,7 +3,8 @@ import { Route, Routes} from 'react-router-dom';
 import './theme/styles.css';
 import {CourseVisualizer} from './components/CourseVisualizer';
 import {Navbar} from './components/Navbar';
-import {Login} from './components/Login'
+import {Login} from './components/Login';
+import {Discovery} from './components/Discovery';
 
 function App() {
   return (
@@ -18,6 +19,12 @@ function App() {
           <Navbar />
           <CourseVisualizer />
         </div>
+      }/>
+      <Route path="/discovery" element={
+        <>
+          <Navbar />
+          <Discovery />
+        </>
       }/>
     </Routes>
     
