@@ -26,11 +26,13 @@
 }
 
 #logo {
-    background-image: url('./Manning_CICS-horiz-cmyk-lrg.jpg');
+    background-image: url('./UMass_Seal_Medium_PMS_202_0.png');
     background-repeat:no-repeat;
     background-size:contain;
-    height:200px;
-    width:70%;
-    margin: auto;
+    height: 300px;
+    width:50%;
+    left: 50%;
+    margin-left: -140px;
     margin-top: 4rem;
+    position: absolute;
 }
