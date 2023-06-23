@@ -1,10 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Inconsolata&family=Josefin+Sans:wght@300;400&display=swap');
+@font-face {
+    font-family: "MuseoSans";
+    font-style: normal;
+    font-weight: normal;
+    src: local("MuseoSans-Regular"), url("./museosans-300.ttf") format("truetype");
+}
+
 body {
     margin: 0;
     height: 100%;
     overflow: hidden;
-    font-family: 'Inconsolata', monospace;
-    font-family: 'Josefin Sans', sans-serif;
+    font-family: 'Museo Sans', sans-serif;
     background-color: #e3e2df;
     background-image: none;
 }
