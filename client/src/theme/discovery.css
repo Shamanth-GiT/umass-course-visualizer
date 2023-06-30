@@ -8,29 +8,47 @@
 
 .card {
     width: 18rem;
-    border-style:dashed;
+    margin: 1rem;
+    border-style: dashed;
     border-color: black;
     border-width: 2px;
+    font-family: 'Museo Sans', sans-serif !important;
 }
 
 .card:hover {
     border-style: solid;
-    border-color: maroon;
-    cursor:pointer;
+    border-color: rgba(151, 27, 47, 1);
+    cursor: pointer;
 }
 
 .container {
-    margin-top: 5rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    margin: 5rem auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
 }
 
 #logo {
-    background-image: url('./Manning_CICS-horiz-cmyk-lrg.jpg');
-    background-repeat:no-repeat;
-    background-size:contain;
-    height:200px;
-    width:70%;
-    margin: auto;
+    background-image: url('./Manning_CICS-horiz-cmyk.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 300px;
+    width: 50%;
+    left: 50%;
+    transform: translateX(-50%);
     margin-top: 4rem;
+    position: absolute;
+}
+
+.navbar-custom {
+    background-color: rgba(151, 27, 47, 1);
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
 }

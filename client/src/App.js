@@ -26,8 +26,13 @@ function App() {
           <Discovery />
         </>
       }/>
+      <Route path="/graph" element={
+        <div className="App">
+          <Navbar />
+          <CourseVisualizer />
+        </div>
+      } />
     </Routes>
-    
   );
 }
 
