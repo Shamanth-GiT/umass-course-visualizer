@@ -4,13 +4,28 @@ import '../theme/course_visualizer.css'
 export const Navbar = () => {
     return (
         <>
-            <nav class="navbar bg-dark border-bottom border-bottom-dark" data-bs-theme="dark">
-                <div class="container-fluid">
-                    <a class="navbar-brand">UMass Course Visualizer</a>
-                    <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
+            <nav className="navbar navbar-expand-lg navbar-custom">
+                <div className="container-fluid">
+                    <a href="/" className="navbar-brand">CICSNavigator</a>
+                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
+                    </button>
+                    <div className="collapse navbar-collapse" id="navbarNav">
+                        <ul className="navbar-nav ml-auto">
+                            <li className="nav-item">
+                                <a className="nav-link" href="/discovery">Discovery</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="/schedule">Course List</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="/profile">Profile</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="/coursegraph">Course Graph</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </nav>
         </>
