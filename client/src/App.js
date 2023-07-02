@@ -5,6 +5,7 @@ import {CourseVisualizer} from './components/CourseVisualizer';
 import {Navbar} from './components/Navbar';
 import {Login} from './components/Login';
 import {Discovery} from './components/Discovery';
+import {Profile} from './components/Profile';
 
 function App() {
   return (
@@ -24,6 +25,12 @@ function App() {
         <>
           <Navbar />
           <Discovery />
+        </>
+      }/>
+      <Route path="/profile" element={
+        <>
+          <Navbar />
+          <Profile />
         </>
       }/>
     </Routes>

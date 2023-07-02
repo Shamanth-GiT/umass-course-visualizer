@@ -1,78 +1,107 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Typography, IconButton, Button, Link, MenuItem, Menu } from '@mui/material';
+import { AppBar, Toolbar, Typography, IconButton, Button, Link, Drawer, useMediaQuery, useTheme, Box } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import '../theme/course_visualizer.css'
 
 export const Navbar = () => {
-    const [anchorEl, setAnchorEl] = useState(null);
+    const [open, setOpen] = useState(false);
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-    const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+    const handleToggle = () => {
+        setOpen(!open);
     };
 
-    const handleClose = () => {
-    setAnchorEl(null);
-    };
+    const menuItems = [
+        { label: 'Discovery' },
+        { label: 'Profile' },
+        { label: 'Course List' },
+        { label: 'Course Graph' },
+    ];
+
     return (
-        // <>
-        //     <nav className="navbar navbar-expand-lg navbar-custom">
-        //         <div className="container-fluid">
-        //             <a href="/" className="navbar-brand">CICSNavigator</a>
-        //             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        //                 <span className="navbar-toggler-icon"></span>
-        //             </button>
-        //             <div className="collapse navbar-collapse" id="navbarNav">
-        //                 <ul className="navbar-nav ml-auto">
-        //                     <li className="nav-item">
-        //                         <a className="nav-link" href="/discovery">Discovery</a>
-        //                     </li>
-        //                     <li className="nav-item">
-        //                         <a className="nav-link" href="/schedule">Course List</a>
-        //                     </li>
-        //                     <li className="nav-item">
-        //                         <a className="nav-link" href="/profile">Profile</a>
-        //                     </li>
-        //                     <li className="nav-item">
-        //                         <a className="nav-link" href="/coursegraph">Course Graph</a>
-        //                     </li>
-        //                 </ul>
-        //             </div>
-        //         </div>
-        //     </nav>
-        // </>
-        // <AppBar position="static" sx={{backgroundColor: '#e3afbc'}}>
-        //     <Toolbar>
-        //         <IconButton edge="start" sx={{color: 'black'}} aria-label="menu">
-        //             <MenuIcon />
-        //         </IconButton>
-        //         <Link href="/" sx={{color: 'black', textDecoration: 'none'}} rel="noopener noreferrer">
-        //             <Typography variant="h5" sx={{ flexGrow: 1,  color: 'black'}}>
-        //                 CICS Course Visualizer
-        //             </Typography>
-        //         </Link>
-                
-        //     </Toolbar>
-        // </AppBar>
-        <AppBar position="static" sx={{backgroundColor: '#5d001e'}}>
+        <AppBar position="static" sx={{ backgroundColor: '#5d001e' }}>
             <Toolbar>
-                <IconButton color="inherit" onClick={handleClick}>
-                    <MenuIcon />
-                </IconButton>
-                <Link href="/" sx={{color: 'black', textDecoration: 'none'}} rel="noopener noreferrer">
-                    <Typography variant="h5" sx={{ flexGrow: 1,  color: 'white'}}>
-                        CICS Course Visualizer
-                    </Typography>
-                </Link>
-                <Menu
-                    anchorEl={anchorEl}
-                    open={Boolean(anchorEl)}
-                    onClose={handleClose}
-                >
-                    <MenuItem onClick={handleClose}>Discovery</MenuItem>
-                    <MenuItem onClick={handleClose}>Profile</MenuItem>
-                    <MenuItem onClick={handleClose}>Course List</MenuItem>
-                    <MenuItem onClick={handleClose}>Course Graph</MenuItem>
-                </Menu>
+                <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
+                    <IconButton color="inherit" onClick={handleToggle} edge="start" sx={{ display: { sm: "none" } }}>
+                        <MenuIcon />
+                    </IconButton>
+                    <Link href="/" sx={{ textDecoration: 'none' }} rel="noopener noreferrer">
+                        <Typography variant="h5" sx={{ color: 'white' }}>
+                            CICS Course Visualizer
+                        </Typography>
+                    </Link>
+                </Box>
+                {isMobile ? (
+                    <Drawer
+                        anchor='top'
+                        open={open}
+                        onClose={handleToggle}
+                    >
+                        <Box
+                            sx={{
+                                width: '100vw',
+                                height: '100vh',
+                                bgcolor: '#5d001e',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                            }}
+                        >
+                            <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px' }}>
+                                <Typography variant="h5" sx={{ color: 'white' }}>
+                                    CICS Course Visualizer
+                                </Typography>
+                                <IconButton onClick={handleToggle} sx={{ color: 'white' }}>
+                                    <MenuIcon />
+                                </IconButton>
+                            </Box>
+                            {menuItems.map((item) => (
+                                <Button variant="outlined" color="inherit" onClick={handleToggle} key={item.label}
+                                    sx={{
+                                        color: '#000',
+                                        backgroundColor: '#fff',
+                                        borderRadius: '10px',
+                                        margin: '5px 0',
+                                        borderColor: 'transparent',
+                                        '&:hover': {
+                                            backgroundColor: '#f5f5f5'
+                                        },
+                                        width: '80%', // Sets the width for mobile view
+                                        textAlign: 'center',
+                                    }}
+                                >
+                                    {item.label}
+                                </Button>
+                            ))}
+                        </Box>
+                    </Drawer>
+                ) : (
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        {menuItems.map((item) => (
+                            <Button
+                                variant="outlined"
+                                color="inherit"
+                                onClick={handleToggle}
+                                key={item.label}
+                                sx={{
+                                    color: '#000',
+                                    backgroundColor: '#fff',
+                                    borderRadius: '10px',
+                                    margin: '0 10px',
+                                    borderColor: 'transparent',
+                                    '&:hover': {
+                                        backgroundColor: '#f5f5f5'
+                                    },
+                                    width: '150px', // Sets the width for widescreen view
+                                    textAlign: 'center',
+                                }}
+                            >
+                                {item.label}
+                            </Button>
+                        ))}
+                    </Box>
+                )}
             </Toolbar>
         </AppBar>
     );

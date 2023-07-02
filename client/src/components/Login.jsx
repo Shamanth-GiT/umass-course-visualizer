@@ -21,7 +21,7 @@ export const Login = (props) => {
             // Here you can implement registration logic
         } else {
             console.log(email, pass);
-            // Here you can implement login logic
+            // login logic
         }
     }
 
