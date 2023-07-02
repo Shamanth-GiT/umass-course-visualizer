@@ -26,7 +26,7 @@ export const Navbar = () => {
                         <MenuIcon />
                     </IconButton>
                     <Link href="/" sx={{ textDecoration: 'none' }} rel="noopener noreferrer">
-                        <Typography variant="h5" sx={{ color: 'white' }}>
+                        <Typography variant="h6" sx={{ color: 'white' }}>
                             CICS Course Visualizer
                         </Typography>
                     </Link>
@@ -93,7 +93,7 @@ export const Navbar = () => {
                                     '&:hover': {
                                         backgroundColor: '#f5f5f5'
                                     },
-                                    width: '150px', // Sets the width for widescreen view
+                                    width: '160px', // Sets the width for widescreen view
                                     textAlign: 'center',
                                 }}
                             >
