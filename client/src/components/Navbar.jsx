@@ -28,7 +28,7 @@ export const Navbar = () => {
                         <MenuIcon />
                     </IconButton>
                     <Link href="/" sx={{ textDecoration: 'none' }} rel="noopener noreferrer">
-                        <Typography variant="h6" sx={{ color: 'white' }}>
+                        <Typography variant="h5" sx={{ color: 'white' }}>
                             CICS Course Visualizer
                         </Typography>
                     </Link>
@@ -88,13 +88,12 @@ export const Navbar = () => {
                             {menuItems.map((item) => (
                                 <Button variant="outlined" color="inherit" onClick={handleToggle} key={item.label}
                                     sx={{
-                                        color: '#000',
-                                        backgroundColor: '#fff',
+                                        color: '#fff', // changed to white color
                                         borderRadius: '10px',
                                         margin: '5px 0',
                                         borderColor: 'transparent',
                                         '&:hover': {
-                                            backgroundColor: '#f5f5f5'
+                                            color: '#ddd' // changed to slightly darker color on hover for better UX
                                         },
                                         width: '80%', // Sets the width for mobile view
                                         textAlign: 'center',
@@ -107,29 +106,28 @@ export const Navbar = () => {
                     </Drawer>
                 ) : (
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        {menuItems.map((item) => (
-                            <Button
-                                variant="outlined"
-                                color="inherit"
-                                onClick={handleToggle}
-                                key={item.label}
-                                sx={{
-                                    color: '#000',
-                                    backgroundColor: '#fff',
-                                    borderRadius: '10px',
-                                    margin: '0 10px',
-                                    borderColor: 'transparent',
-                                    '&:hover': {
-                                        backgroundColor: '#f5f5f5'
-                                    },
-                                    width: isTablet ? '140px' : '160px', // Sets the width for widescreen view
-                                    fontSize: isTablet ? '0.8rem' : '1rem', // Adjust font size based on the device
-                                    textAlign: 'center',
-                                }}
-                            >
-                                {item.label}
-                            </Button>
-                        ))}
+                            {menuItems.map((item) => (
+                                <Button
+                                    variant="outlined"
+                                    color="inherit"
+                                    onClick={handleToggle}
+                                    key={item.label}
+                                    sx={{
+                                        color: '#fff', // changed to white color
+                                        borderRadius: '10px',
+                                        margin: '0 10px',
+                                        borderColor: 'transparent',
+                                        '&:hover': {
+                                            color: '#ddd' // changed to slightly darker color on hover for better UX
+                                        },
+                                        width: isTablet ? '140px' : '160px', // Sets the width for widescreen view
+                                        fontSize: isTablet ? '0.8rem' : '1rem', // Adjust font size based on the device
+                                        textAlign: 'center',
+                                    }}
+                                >
+                                    {item.label}
+                                </Button>
+                            ))}
                     </Box>
                 )}
             </Toolbar>
