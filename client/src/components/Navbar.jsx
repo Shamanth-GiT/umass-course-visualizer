@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Typography, IconButton, Button, Link, Drawer, useMediaQuery, useTheme, Box } from '@mui/material';
+import { AppBar, Toolbar, Typography, IconButton, Button, Link, Drawer, useMediaQuery, useTheme, Box, TextField } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import SearchIcon from '@mui/icons-material/Search';
 
 export const Navbar = () => {
     const [open, setOpen] = useState(false);
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
 
     const handleToggle = () => {
         setOpen(!open);
@@ -30,6 +32,21 @@ export const Navbar = () => {
                             CICS Course Visualizer
                         </Typography>
                     </Link>
+                    <Box sx={{ flexGrow: 1, display: 'flex', minWidth: 150 }}>
+                        <TextField 
+                            placeholder="Search..." 
+                            variant="outlined"
+                            fullWidth
+                            sx={{
+                                margin: '0 10px',
+                                backgroundColor: 'white',
+                                borderRadius: '10px',
+                            }}
+                            InputProps={{
+                                startAdornment: <SearchIcon />,
+                            }}
+                        />
+                    </Box>
                 </Box>
                 {isMobile ? (
                     <Drawer
@@ -52,6 +69,18 @@ export const Navbar = () => {
                                 <Typography variant="h5" sx={{ color: 'white' }}>
                                     CICS Course Visualizer
                                 </Typography>
+                                <TextField
+                                    placeholder="Search..."
+                                    variant="outlined"
+                                    sx={{
+                                        backgroundColor: 'white',
+                                        marginRight: '10px',
+                                        borderRadius: '10px', // Adjusting borderRadius to make the TextField round.
+                                    }}
+                                    InputProps={{
+                                        startAdornment: <SearchIcon />,
+                                    }}
+                                />
                                 <IconButton onClick={handleToggle} sx={{ color: 'white' }}>
                                     <MenuIcon />
                                 </IconButton>
@@ -93,7 +122,8 @@ export const Navbar = () => {
                                     '&:hover': {
                                         backgroundColor: '#f5f5f5'
                                     },
-                                    width: '160px', // Sets the width for widescreen view
+                                    width: isTablet ? '140px' : '160px', // Sets the width for widescreen view
+                                    fontSize: isTablet ? '0.8rem' : '1rem', // Adjust font size based on the device
                                     textAlign: 'center',
                                 }}
                             >
