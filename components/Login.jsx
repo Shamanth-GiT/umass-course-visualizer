@@ -1,8 +1,10 @@
+"use client";
+
 import React, { useState } from "react";
 import { CSSTransition } from 'react-transition-group';
-import '../theme/login.css';
+import '@styles/login.css';
 
-export const Login = (props) => {
+const Login = (props) => {
     const [isNewUser, setIsNewUser] = useState(false);
 
     const [email, setEmail] = useState('');
@@ -62,3 +64,5 @@ export const Login = (props) => {
         </div>
     )
 }
+
+export default Login;

@@ -1,9 +1,11 @@
+"use client";
+
 import React, { useState } from 'react';
 import { AppBar, Toolbar, Typography, IconButton, Button, Link, Drawer, useMediaQuery, useTheme, Box, TextField } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 
-export const Navbar = () => {
+const Navbar = () => {
     const [open, setOpen] = useState(false);
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -134,3 +136,5 @@ export const Navbar = () => {
         </AppBar>
     );
 };
+
+export default Navbar;
