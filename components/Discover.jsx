@@ -1,5 +1,5 @@
 import React from 'react';
-import '../theme/discovery.css';
+import '@styles/discovery.css';
 
 export const Discovery = () => {
     return (

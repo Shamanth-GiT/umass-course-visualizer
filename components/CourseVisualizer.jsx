@@ -1,7 +1,9 @@
+"use client";
+
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
-import { fetchCourseID, findCourses } from '../util/Util';
-import '../theme/course_visualizer.css'
+import { fetchCourseID, findCourses } from '@utils/util';
+import '@styles/course_visualizer.css'
 
 // Drag behavior function
 function drag(simulation) {
@@ -52,7 +54,7 @@ const constants = {
     collide: 100
 };
 
-export const CourseVisualizer = () => {
+const CourseVisualizer = () => {
     const nodeRef = useRef();
 
     const processCourses = async () => {
@@ -219,3 +221,5 @@ export const CourseVisualizer = () => {
         </div>
     );
 };
+
+export default CourseVisualizer;

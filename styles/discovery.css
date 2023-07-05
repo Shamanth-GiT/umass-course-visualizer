@@ -37,7 +37,7 @@
 }
 
 #logo {
-    background-image: url('./Manning_CICS-horiz-cmyk.png');
+    /* background-image: url('./Manning_CICS-horiz-cmyk.png');
     background-repeat: no-repeat;
     background-size: contain;
     height: 300px;
@@ -45,7 +45,7 @@
     left: 50%;
     transform: translateX(-50%);
     margin-top: 4rem;
-    position: absolute;
+    position: absolute; */
 }
 
 .navbar-custom {
