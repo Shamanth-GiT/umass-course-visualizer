@@ -1,15 +1,23 @@
-"use client";
+"use client"
 
-import React, { useState } from 'react';
-import { AppBar, Toolbar, Typography, IconButton, Button, Link, Drawer, useMediaQuery, useTheme, Box, TextField } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
+import React, { useState } from "react";
+import { FaBars, FaSearch } from "react-icons/fa";
+
+const SearchBar = ({ searchInput, setSearchInput }) => (
+    <div className="flex bg-white rounded items-center p-1.5 w-72">
+        <FaSearch />
+        <input
+            className="outline-none px-2 py-1 w-full"
+            placeholder="Search..."
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+        />
+    </div>
+)
 
 const Navbar = () => {
     const [open, setOpen] = useState(false);
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
+    const [searchInput, setSearchInput] = useState("");
 
     const handleToggle = () => {
         setOpen(!open);
@@ -23,117 +31,47 @@ const Navbar = () => {
     ];
 
     return (
-        <AppBar position="static" sx={{ backgroundColor: '#5d001e' }}>
-            <Toolbar>
-                <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
-                    <IconButton color="inherit" onClick={handleToggle} edge="start" sx={{ display: { sm: "none" } }}>
-                        <MenuIcon />
-                    </IconButton>
-                    <Link href="/" sx={{ textDecoration: 'none' }} rel="noopener noreferrer">
-                        <Typography variant="h5" sx={{ color: 'white' }}>
-                            CICS Course Visualizer
-                        </Typography>
-                    </Link>
-                    <Box sx={{ flexGrow: 1, display: 'flex', minWidth: 150 }}>
-                        <TextField 
-                            placeholder="Search..." 
-                            variant="outlined"
-                            fullWidth
-                            sx={{
-                                margin: '0 10px',
-                                backgroundColor: 'white',
-                                borderRadius: '10px',
-                            }}
-                            InputProps={{
-                                startAdornment: <SearchIcon />,
-                            }}
-                        />
-                    </Box>
-                </Box>
-                {isMobile ? (
-                    <Drawer
-                        anchor='top'
-                        open={open}
-                        onClose={handleToggle}
-                    >
-                        <Box
-                            sx={{
-                                width: '100vw',
-                                height: '100vh',
-                                bgcolor: '#5d001e',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                            }}
+        <nav className="bg-maroon p-4">
+            <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2 md:space-x-6">
+                    <button onClick={handleToggle} className="text-white md:hidden">
+                        <FaBars />
+                    </button>
+                    <a href="/" className="text-2xl text-white font-bold no-underline">
+                        CICS Course Visualizer
+                    </a>
+                    <div className="hidden md:block">
+                        <SearchBar searchInput={searchInput} setSearchInput={setSearchInput} />
+                    </div>
+                </div>
+                <div className="hidden md:flex">
+                    {menuItems.map((item, index) => (
+                        <a
+                            key={index}
+                            href="#"
+                            className="text-white text-lg px-4 py-2 rounded hover:text-gray-200"
                         >
-                            <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px' }}>
-                                <Typography variant="h5" sx={{ color: 'white' }}>
-                                    CICS Course Visualizer
-                                </Typography>
-                                <TextField
-                                    placeholder="Search..."
-                                    variant="outlined"
-                                    sx={{
-                                        backgroundColor: 'white',
-                                        marginRight: '10px',
-                                        borderRadius: '10px', // Adjusting borderRadius to make the TextField round.
-                                    }}
-                                    InputProps={{
-                                        startAdornment: <SearchIcon />,
-                                    }}
-                                />
-                                <IconButton onClick={handleToggle} sx={{ color: 'white' }}>
-                                    <MenuIcon />
-                                </IconButton>
-                            </Box>
-                            {menuItems.map((item) => (
-                                <Button variant="outlined" color="inherit" onClick={handleToggle} key={item.label}
-                                    sx={{
-                                        color: '#fff', // changed to white color
-                                        borderRadius: '10px',
-                                        margin: '5px 0',
-                                        borderColor: 'transparent',
-                                        '&:hover': {
-                                            color: '#ddd' // changed to slightly darker color on hover for better UX
-                                        },
-                                        width: '80%', // Sets the width for mobile view
-                                        textAlign: 'center',
-                                    }}
-                                >
-                                    {item.label}
-                                </Button>
-                            ))}
-                        </Box>
-                    </Drawer>
-                ) : (
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                            {menuItems.map((item) => (
-                                <Button
-                                    variant="outlined"
-                                    color="inherit"
-                                    onClick={handleToggle}
-                                    key={item.label}
-                                    sx={{
-                                        color: '#fff', // changed to white color
-                                        borderRadius: '10px',
-                                        margin: '0 10px',
-                                        borderColor: 'transparent',
-                                        '&:hover': {
-                                            color: '#ddd' // changed to slightly darker color on hover for better UX
-                                        },
-                                        width: isTablet ? '140px' : '160px', // Sets the width for widescreen view
-                                        fontSize: isTablet ? '0.8rem' : '1rem', // Adjust font size based on the device
-                                        textAlign: 'center',
-                                    }}
-                                >
-                                    {item.label}
-                                </Button>
-                            ))}
-                    </Box>
-                )}
-            </Toolbar>
-        </AppBar>
+                            {item.label}
+                        </a>
+                    ))}
+                </div>
+            </div>
+            {open && (
+                <div className="mt-4 space-y-2 md:hidden">
+                    <SearchBar searchInput={searchInput} setSearchInput={setSearchInput} />
+                    {menuItems.map((item, index) => (
+                        <a
+                            key={index}
+                            href="#"
+                            className="block text-white text-lg px-4 py-2 rounded hover:text-gray-200"
+                            onClick={handleToggle}
+                        >
+                            {item.label}
+                        </a>
+                    ))}
+                </div>
+            )}
+        </nav>
     );
 };
 

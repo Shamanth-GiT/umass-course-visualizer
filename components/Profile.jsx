@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Avatar, Box, Button, TextField, Paper, Typography } from '@mui/material';
 
 export const Profile = () => {
     const [profile, setProfile] = useState({
@@ -36,34 +35,33 @@ export const Profile = () => {
     };
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 2, mb: 2 }}>
-            <Paper elevation={3} sx={{ padding: 2, borderRadius: 2, border: 1, borderColor: 'grey.500', width: '80%' }}>
-                <Avatar src={profile.profilePic} sx={{ width: 100, height: 100, alignSelf: 'center' }} />
+        <div className="flex flex-col items-center my-4 bg-white">
+            <div className="p-4 rounded-lg border-2 border-gray-500 w-4/5">
+                <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gray-200" style={{ backgroundImage: `url(${profile.profilePic})`, backgroundSize: 'cover' }}></div>
                 {
                     editMode ? (
                         <>
-                            <Button variant="contained" component="label" sx={{ marginTop: 2 }}>
-                                Upload Profile Picture
-                                <input type="file" hidden onChange={handlePictureChange} />
-                            </Button>
-                            <TextField name="fullName" label="Full Name" value={profile.fullName} onChange={handleFieldChange} variant="outlined" sx={{ marginTop: 2, width: '100%' }} />
-                            <TextField name="username" label="Username" value={profile.username} onChange={handleFieldChange} variant="outlined" sx={{ marginTop: 2, width: '100%' }} />
-                            <TextField name="schoolYear" label="School Year" value={profile.schoolYear} onChange={handleFieldChange} variant="outlined" sx={{ marginTop: 2, width: '100%' }} />
-                            <TextField name="major" label="Major" value={profile.major} onChange={handleFieldChange} variant="outlined" sx={{ marginTop: 2, width: '100%' }} />
-                            <TextField name="bio" label="Bio" multiline rows={4} value={profile.bio} onChange={handleFieldChange} variant="outlined" sx={{ marginTop: 2, width: '100%' }} />
-                            <Button variant="contained" onClick={handleSaveClick} sx={{ marginTop: 2 }}>Save</Button>
+                            <button className="mb-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Upload Profile Picture
+                                <input type="file" className="hidden" onChange={handlePictureChange} />
+                            </button>
+                            <input name="fullName" value={profile.fullName} onChange={handleFieldChange} className="mb-4 w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none" placeholder="Full Name" />
+                            <input name="username" value={profile.username} onChange={handleFieldChange} className="mb-4 w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none" placeholder="Username" />
+                            <input name="schoolYear" value={profile.schoolYear} onChange={handleFieldChange} className="mb-4 w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none" placeholder="School Year" />
+                            <input name="major" value={profile.major} onChange={handleFieldChange} className="mb-4 w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none" placeholder="Major" />
+                            <textarea name="bio" value={profile.bio} onChange={handleFieldChange} rows={4} className="mb-4 w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none" placeholder="Bio"></textarea>
+                            <button onClick={handleSaveClick} className="mb-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Save</button>
                         </>
                     ) : (
                         <>
-                            <Typography variant="h5" sx={{ marginTop: 2 }}>{profile.fullName} ({profile.username})</Typography>
-                            <Typography sx={{ marginTop: 2 }}>School Year: {profile.schoolYear}</Typography>
-                            <Typography sx={{ marginTop: 2 }}>Major: {profile.major}</Typography>
-                            <Typography sx={{ marginTop: 2 }}>Bio: {profile.bio}</Typography>
-                            <Button variant="contained" onClick={handleEditClick} sx={{ marginTop: 2 }}>Edit</Button>
+                            <h5 className="mb-4 text-xl">{profile.fullName} ({profile.username})</h5>
+                            <p className="mb-4">School Year: {profile.schoolYear}</p>
+                            <p className="mb-4">Major: {profile.major}</p>
+                            <p className="mb-4">Bio: {profile.bio}</p>
+                            <button onClick={handleEditClick} className="mb-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</button>
                         </>
                     )
                 }
-            </Paper>
-        </Box>
+            </div>
+        </div>
     );
 };
