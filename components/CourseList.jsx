@@ -44,7 +44,7 @@ export const DataTable = () => {
         previousPage,
         state: { pageIndex },
     } = useTable(
-        { columns, data, initialState: { pageIndex: 0 } },
+        { columns, data, initialState: { pageIndex: 0, pageSize: 5 }},
         usePagination
     )
 
