@@ -1,4 +1,3 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -12,7 +11,16 @@ module.exports = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      fontFamily: {
+        'sans': ['Museo Sans', 'sans-serif'],
+      },
+      colors: {
+        maroon: "#971b2f",
+      },
     },
   },
-  plugins: [],
+  variants: {},
+  plugins: [
+    require('@tailwindcss/forms')
+  ],
 }
