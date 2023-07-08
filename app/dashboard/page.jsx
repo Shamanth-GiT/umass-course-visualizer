@@ -1,5 +1,5 @@
 import Navbar from '@components/Navbar';
-import CourseVisualizer from '@/components/CourseVisualizer';
+import CourseVisualizer from '@app/dashboard/CourseVisualizer';
 
 export default function Dashboard() {
   return (

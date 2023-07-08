@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import * as d3 from 'd3';
 import { fetchCourseID, findCourses } from '@utils/util';
 
@@ -49,13 +49,30 @@ const constants = {
 
 const CourseVisualizer = () => {
     const nodeRef = useRef();
+    const [windowWidth, setWindowWidth] = useState(null);
+    const [windowHeight, setWindowHeight] = useState(null);
+
+    useEffect(() => {
+        setWindowWidth(window.innerWidth);
+        setWindowHeight(window.innerHeight);
+
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+            setWindowHeight(window.innerHeight);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        }
+    }, []);
 
     const processCourses = async () => {
         const courses = {};
 
         for (const search of searchQueries) {
             const data = await fetchCourseID(search);
-
             const courseMap = new Map();
             data.forEach(item => {
                 item.results.forEach(result => {
@@ -107,15 +124,17 @@ const CourseVisualizer = () => {
         return { nodes, links };
     };
 
-    const createD3Visualization = async (nodes, links) => {
-        const svg = d3.select(nodeRef.current);
+    const createD3Visualization = useCallback(async (nodes, links) => {
+        const svg = d3.select(nodeRef.current)
+            .attr("width", windowWidth)
+            .attr("height", windowHeight);
 
         svg.selectAll("g").remove();
 
         const simulation = d3.forceSimulation(nodes)
             .force("link", d3.forceLink(links).id(d => d.id).distance(constants.distance))
             .force("charge", d3.forceManyBody(-10))
-            .force("center", d3.forceCenter(svg.attr("width") / 2, svg.attr("height") / 2))
+            .force("center", d3.forceCenter(windowWidth / 2, windowHeight / 2))
             .force("collide", d3.forceCollide(constants.collide));
 
         const container = svg.append("g");
@@ -144,22 +163,21 @@ const CourseVisualizer = () => {
             .attr('fill', 'gray')
             .style('stroke', 'none');
 
-        const link = container.append("g")
-            .attr("class", "links")
+const link = container.append("g")
+            .attr("stroke", "#999")
+            .attr("stroke-opacity", 0.6)
             .selectAll("line")
             .data(links)
-            .enter()
-            .append("line")
-            .attr("stroke-width", 3)
-            .attr("stroke", "gray")
+            .join("line")
+            .attr("stroke-width", d => Math.sqrt(d.value))
             .attr('marker-end', 'url(#arrowhead)');
 
         const node = container.append("g")
-            .attr("class", "nodes")
+            .attr("stroke", "#fff")
+            .attr("stroke-width", 1.5)
             .selectAll("circle")
             .data(nodes)
-            .enter()
-            .append("circle")
+            .join("circle")
             .attr("r", constants.circleRadius)
             .attr("fill", d => courseColor(d.name))
             .call(drag(simulation));
@@ -170,10 +188,12 @@ const CourseVisualizer = () => {
             .data(nodes)
             .enter()
             .append("text")
+            .attr("class", "label")
             .text(d => d.name)
-            .attr("font-size", "14px")
-            .attr("dx", 22)
-            .attr("dy", 4);
+            .style("text-anchor", "middle")
+            .style("fill", "#555")
+            .style("font-family", "Arial")
+            .style("font-size", 12);
 
         const ticked = () => {
             link.attr("x1", d => d.source.x)
@@ -189,7 +209,7 @@ const CourseVisualizer = () => {
         };
 
         simulation.on("tick", ticked);
-    };
+    }, [windowWidth, windowHeight]);
 
     useEffect(() => {
         const main = async () => {
@@ -199,7 +219,7 @@ const CourseVisualizer = () => {
         };
 
         main();
-    }, []);
+    }, [windowWidth, windowHeight, createD3Visualization]);
 
     return (
         <div className="dashboard">
