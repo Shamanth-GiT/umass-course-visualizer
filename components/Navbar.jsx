@@ -37,7 +37,7 @@ const Navbar = () => {
                     <button onClick={handleToggle} className="text-white md:hidden">
                         <FaBars />
                     </button>
-                    <a href="/" className="text-2xl text-white font-bold no-underline">
+                    <a href="/discovery" className="text-2xl text-white font-bold no-underline">
                         CICS Course Visualizer
                     </a>
                     <div className="hidden md:block">
