@@ -24,10 +24,10 @@ const Navbar = () => {
     };
 
     const menuItems = [
-        { label: 'Discovery' },
-        { label: 'Profile' },
-        { label: 'Course List' },
-        { label: 'Course Graph' },
+        { label: 'Discovery', href: "/discovery"},
+        { label: 'Profile', href: "/profile"},
+        { label: 'Course List', href: "/list" },
+        { label: 'Course Graph', href: "/dashboard" },
     ];
 
     return (
@@ -48,7 +48,7 @@ const Navbar = () => {
                     {menuItems.map((item, index) => (
                         <a
                             key={index}
-                            href="#"
+                            href={item.href}
                             className="text-white text-lg px-4 py-2 rounded hover:text-gray-200"
                         >
                             {item.label}
