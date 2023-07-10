@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { FaBars, FaSearch } from "react-icons/fa";
+import { signOut, useSession } from "next-auth/react";
 
 const SearchBar = ({ searchInput, setSearchInput }) => (
     <div className="flex bg-white rounded items-center p-1.5 w-72">

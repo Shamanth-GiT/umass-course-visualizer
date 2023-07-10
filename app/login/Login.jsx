@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { signIn } from "next-auth/react";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
 
 const Login = () => {
@@ -81,6 +82,7 @@ const Login = () => {
                                         <input value={pass} onChange={(e) => setPass(e.target.value)} id="password" name="password" type="password" className="w-full p-2 border border-gray-300 rounded mt-1" />
                                     </div>
                                     <button type="submit" className="w-full py-2 px-4 bg-maroon text-white rounded hover:bg-maroon focus:outline-none">Log In</button>
+                                    <button onClick={() => signIn("google")} type="submit" className="w-full py-2 px-4 bg-maroon text-white rounded hover:bg-maroon focus:outline-none">Log In with Google</button>
                                 </form>
                             )}
                         </div>
