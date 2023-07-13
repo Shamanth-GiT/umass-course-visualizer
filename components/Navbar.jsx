@@ -19,6 +19,7 @@ const SearchBar = ({ searchInput, setSearchInput }) => (
 const Navbar = () => {
     const [open, setOpen] = useState(false);
     const [searchInput, setSearchInput] = useState("");
+    const { data: session } = useSession()
 
     const handleToggle = () => {
         setOpen(!open);
@@ -30,6 +31,18 @@ const Navbar = () => {
         { label: 'Course List', href: "/list" },
         { label: 'Course Graph', href: "/dashboard" },
     ];
+
+    if (session) {
+        menuItems.push({
+            label: 'Log Out',
+            href: "/",
+            onClick: (e) => {
+                e.preventDefault();
+                signOut();
+                console.log(session)
+            }
+        })
+    }
 
     return (
         <nav className="bg-maroon p-4">
@@ -51,6 +64,7 @@ const Navbar = () => {
                             key={index}
                             href={item.href}
                             className="text-white text-lg px-4 py-2 rounded hover:text-gray-200"
+                            onClick={item.onClick}
                         >
                             {item.label}
                         </a>
@@ -63,9 +77,9 @@ const Navbar = () => {
                     {menuItems.map((item, index) => (
                         <a
                             key={index}
-                            href="#"
+                            href={item.href}
                             className="block text-white text-lg px-4 py-2 rounded hover:text-gray-200"
-                            onClick={handleToggle}
+                            onClick={item.onClick}
                         >
                             {item.label}
                         </a>

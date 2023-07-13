@@ -16,7 +16,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [retypePass, setRetypePass] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (isNewUser) {
             console.log(username, firstName, lastName, password);
@@ -24,6 +24,17 @@ const Login = () => {
         } else {
             console.log(email, pass);
             // login logic
+            const response = await signIn("credentials", {
+                redirect: false,
+                email: email,
+                password: pass
+            });
+            if (response.error) {
+                console.log("Failed to log in: ", response.error);
+            } else {
+                console.log("Logged in successfully");
+                router.push('/discovery');  // Redirect the user to /discovery
+            }
         }
     }
 
