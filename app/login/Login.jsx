@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { signIn } from "next-auth/react";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
 
 const Login = () => {
@@ -15,7 +16,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [retypePass, setRetypePass] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (isNewUser) {
             console.log(username, firstName, lastName, password);
@@ -23,6 +24,17 @@ const Login = () => {
         } else {
             console.log(email, pass);
             // login logic
+            const response = await signIn("credentials", {
+                redirect: false,
+                email: email,
+                password: pass
+            });
+            if (response.error) {
+                console.log("Failed to log in: ", response.error);
+            } else {
+                console.log("Logged in successfully");
+                router.push('/discovery');  // Redirect the user to /discovery
+            }
         }
     }
 
@@ -81,6 +93,7 @@ const Login = () => {
                                         <input value={pass} onChange={(e) => setPass(e.target.value)} id="password" name="password" type="password" className="w-full p-2 border border-gray-300 rounded mt-1" />
                                     </div>
                                     <button type="submit" className="w-full py-2 px-4 bg-maroon text-white rounded hover:bg-maroon focus:outline-none">Log In</button>
+                                    <button onClick={() => signIn("google")} type="submit" className="w-full py-2 px-4 bg-maroon text-white rounded hover:bg-maroon focus:outline-none">Log In with Google</button>
                                 </form>
                             )}
                         </div>
