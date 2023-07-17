@@ -1,11 +1,16 @@
 "use client";
 
 import React, { useState } from 'react';
+import { useSession } from 'next-auth/react';
 
 export const Profile = () => {
+    const session = useSession();
+    console.log(session);
+    console.log(session.data);
+    let user_info = session.data.user;
     const [profile, setProfile] = useState({
         profilePic: null,
-        fullName: 'Quang Dang',
+        fullName: user_info.name,
         username: 'Queue',
         schoolYear: 'Junior',
         major: 'Computer Science',
