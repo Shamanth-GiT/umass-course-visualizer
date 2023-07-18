@@ -4,7 +4,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Login from '@app/login/Login';
 
-export default function Home() {
+function Home() {
   const session = useSession();
   const router = useRouter();
   console.log(session);
@@ -17,3 +17,5 @@ export default function Home() {
     </>
   )
 }
+
+export default Home;
