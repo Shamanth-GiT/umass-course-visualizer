@@ -9,9 +9,9 @@ export const Profile = () => {
     console.log(session.data);
     let user_info = session.data.user;
     const [profile, setProfile] = useState({
-        profilePic: null,
+        profilePic: user_info.image,
         fullName: user_info.name,
-        username: 'Queue',
+        username: 'shamy_1018',
         schoolYear: 'Junior',
         major: 'Computer Science',
         bio: 'Hello, I like web dev and ML/AI',
@@ -58,7 +58,8 @@ export const Profile = () => {
                         </>
                     ) : (
                         <>
-                            <h5 className="mb-4 text-xl">{profile.fullName} ({profile.username})</h5>
+                            <h5 className="mb-4 text-xl">{profile.fullName}</h5>
+                            <h3 className="mb-4 text-lg">Username: {profile.username} </h3>
                             <p className="mb-4">School Year: {profile.schoolYear}</p>
                             <p className="mb-4">Major: {profile.major}</p>
                             <p className="mb-4">Bio: {profile.bio}</p>
